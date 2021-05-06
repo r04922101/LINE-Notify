@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tw">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    function auth() {
+      const params = new URLSearchParams();
+      params.append("response_type", "code");
+      params.append("client_id", "YOUR_CLIENT_ID");
+      params.append("redirect_uri", "http://localhost:3000/callback");
+      params.append("scope", "notify");
+      params.append("state", "state");
+      const URL = `https://notify-bot.line.me/oauth/authorize?${params.toString()}`;;
+      window.location.href = URL;
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="auth();">LINE Notify</button>
+</body>
+
+</html>

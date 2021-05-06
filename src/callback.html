@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINE Notify Callback</title>
+</head>
+
+<body>
+  <input type="text" id="text" placeholder="input your message">
+
+  <script>
+    function sendMessage(code, event) {
+      const keyCode = event.code || event.key;
+      if (keyCode !== "Enter") {
+        return;
+      }
+      const message = document.getElementById("text").value;
+      fetch("/notify", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+          code,
+          message
+        })
+      })
+        .then(resp => resp.json())
+        .then(result => {
+          if (result.status !== 200) {
+            alert(result.message);
+          }
+          alert("Message sent");
+        })
+    }
+
+    const params = new URL(window.location.href).searchParams;
+    const error = params.get("error");
+    const error_description = params.get("error_description");
+    if (error) {
+      alert(`Callback error: ${error}`);
+    } else {
+      const code = params.get("code");
+      document.getElementById("text").addEventListener("keypress", function(event) { sendMessage(code, event) })
+    }
+  </script>
+</body>
+
+</html>
