@@ -91,3 +91,7 @@ Before you exceed the rate limit and call notification API successfully, you wil
     </tr>
   </tbody>
 </table>
+
+## Demo
+
+![demo](./images/LINE-Notify-demo.gif)
